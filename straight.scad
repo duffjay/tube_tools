@@ -16,9 +16,10 @@ center_bend_radius = 48/2 + tubing_od/2;
 str_x = 40;
 
 // designed for drywall screws #6 x 1 1/4
-mnt_screw_dia = 3.8;
-mnt_screw_head_dia = 9.2 ;
-mnt_screw_head_countersink =  3;   // distance to bottom
+m4_screw_dia = 4;
+m4_screw_pilot = 3.2;
+m4_screw_head_dia = 7 ;
+m4_screw_head_countersink =  3;   // distance to bottom
 
 $fn = 50;
 
@@ -31,9 +32,9 @@ difference () {
         cube([str_x, center_bend_radius, tool_z],center = true);
         
         // female dovetail
-        translate([-str_x/2, -center_bend_radius/2 + 10,0])
-        rotate([0,0,90])
-        dovetail(3,tool_z, 0.2);
+        // translate([-str_x/2, -center_bend_radius/2 + 10,0])
+        // rotate([0,0,90])
+        // dovetail(3,tool_z, 0.2);
         }
     }
     // substract
@@ -44,23 +45,23 @@ difference () {
     cylinder(r = tubing_od/2 + tube_tolerance, h = str_x, center = true);
         
     // female dovetail
-    translate([str_x/2, -center_bend_radius/2 + 10,0])
-    rotate([0,0,90])
-    dovetail(3,tool_z, 0.2);
+    // translate([str_x/2, -center_bend_radius/2 + 10,0])
+    // rotate([0,0,90])
+    // dovetail(3,tool_z, 0.2);
         
     // mounting holes
     y_base = -center_bend_radius/2;
-    hole_set = [[8, y_base + 8], [-8,y_base + 18],
-        [8, y_base + 18], [-8,y_base + 8]];
+    hole_set = [[(str_x/2 - 8), y_base + 8], [-(str_x/2 - 8),y_base + 18],
+        [(str_x/2 - 8), y_base + 18], [-(str_x/2 - 8),y_base + 8]];
     for ( i = hole_set ) {
         union () {
         translate([i[0],i[1],0])
-        cylinder(r = mnt_screw_dia/2, h = tool_z, center = true);
+        cylinder(r = m4_screw_pilot/2, h = tool_z, center = true);
         
-        translate([i[0],i[1],(tool_z/2 - mnt_screw_head_countersink/2)])
-        cylinder(r = mnt_screw_head_dia/2, 
-            h = mnt_screw_head_countersink, 
-            center = true);
+        // translate([i[0],i[1],(tool_z/2 - mnt_screw_head_countersink/2)])
+        // cylinder(r = mnt_screw_head_dia/2, 
+        //     h = mnt_screw_head_countersink, 
+        //     center = true);
         }
     }
     
@@ -79,7 +80,7 @@ difference () {
     cube([center_bend_radius/4, 0.5, 0.5], center=false);
     
     // engraved top
-    translate([0,10,tool_z/2 -1])
-    letter(engrave_text, 1, 4, "Liberation Sans");
+    // translate([0,10,tool_z/2 -1])
+    // letter(engrave_text, 1, 4, "Liberation Sans");
     }
 }
